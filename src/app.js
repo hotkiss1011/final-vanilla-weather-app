@@ -19,11 +19,14 @@ function formatDate(timestamp) {
   return `${day} ${hours}:${minutes}`;
 }
 
-function displayForecast() {
+function displayForecast(response) {
+  console.log(response.data.daily);
   let forecastElement = document.querySelector(".weather-forecast");
 
-  let forecastHTML = `<div class="row">`;
   let days = ["Thu", "Fri", "Sat", "Sun"];
+  
+  let forecastHTML = `<div class="row">`;
+  
   days.forEach(function (day) {
     forecastHTML = forecastHTML +
     `
@@ -41,6 +44,15 @@ function displayForecast() {
   });
   forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
+}
+
+function getForecast(coordinates) {
+  console.log(coordinates);
+
+  let key = "05992a658e151609dfa497fc6c2796f2";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${key}`;
+
+  axios.get(apiUrl).then(displayForecast);
 }
 
 function displayTemp(response) {
@@ -71,6 +83,8 @@ function displayTemp(response) {
   iconElement.setAttribute("alt", response.data.weather[0].description);
 
   fTemp = Math.round(response.data.main.temp);
+
+  getForecast(response.data.coord);
 }
 
 function search(city) {
@@ -125,5 +139,3 @@ let fahrenheitLink = document.querySelector("#fahrenheit-link");
 fahrenheitLink.addEventListener("click", showFahrenheit);
 
 search("Knoxville");
-
-displayForecast();
