@@ -114,44 +114,14 @@ function search(city) {
 
 function handleSubmit(event) {
   event.preventDefault();
-  celsiusLink.classList.remove("active");
-  fahrenheitLink.classList.add("active");
 
   let cityInputElement = document.querySelector("#city-input");
   search(cityInputElement.value);
-}
-
-function showCelsius(event) {
-    event.preventDefault();
-
-    let tempElement = document.querySelector("#temp");
-
-    fahrenheitLink.classList.remove("active");
-    celsiusLink.classList.add("active");
-
-    let celsiusTemp = Math.round((fTemp * 9 / 5) + 32);
-    tempElement.innerHTML = celsiusTemp;  
-}
-
-function showFahrenheit(event) {
-  event.preventDefault();
-
-  celsiusLink.classList.remove("active");
-  fahrenheitLink.classList.add("active");
-
-  let tempElement = document.querySelector("#temp");
-  tempElement.innerHTML = fTemp;
 }
 
 let fTemp = null;
 
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
-
-let celsiusLink = document.querySelector("#celsius-link");
-celsiusLink.addEventListener("click", showCelsius);
-
-let fahrenheitLink = document.querySelector("#fahrenheit-link");
-fahrenheitLink.addEventListener("click", showFahrenheit);
 
 search("Knoxville");
